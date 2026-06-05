@@ -1,32 +1,36 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-import OpenAI from 'openai';
 
 dotenv.config();
 
 const router = express.Router();
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 router.route('/').get((req, res) => {
-  res.status(200).json({ message: 'Hello from DALL-E!' });
+  res.status(200).json({ message: 'Hello from Hugging Face AI!' });
 });
 
 router.route('/').post(async (req, res) => {
   try {
     const { prompt } = req.body;
 
-    const aiResponse = await openai.images.generate({
-      model: 'dall-e-3',
-      prompt,
-      n: 1,
-      size: '1024x1024',
+    const response = await fetch("https://api-inference.huggingface.co/models/prompthero/openjourney", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.HF_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ inputs: prompt }),
     });
 
-    const image = aiResponse.data[0].url;
-    res.status(200).json({ photo: image });
+    if (!response.ok) {
+      throw new Error(`Hugging Face API Error: ${await response.text()}`);
+    }
+
+    const buffer = await response.arrayBuffer();
+    const base64Image = Buffer.from(buffer).toString('base64');
+    const dataUrl = `data:image/jpeg;base64,${base64Image}`;
+
+    res.status(200).json({ photo: dataUrl });
   } catch (error) {
     console.error(error);
     res.status(500).send(error?.message || 'Something went wrong');
