@@ -1,14 +1,15 @@
 {
-  "name": "server",
+  "name": "anwesh-ai-image-generator-server",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
+  "description": "Backend API for AI-powered image generation using DALL-E and Cloudinary",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index"
+    "start": "node index.js",
+    "dev": "nodemon index"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Anwesh",
+  "license": "MIT",
   "dependencies": {
     "cloudinary": "^1.33.0",
     "cors": "^2.8.5",

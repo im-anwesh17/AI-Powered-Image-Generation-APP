@@ -1,0 +1,24 @@
+# Render Blueprint — Backend Deployment
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: anwesh-ai-image-generator-api
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: MONGODB_URL
+        sync: false  # Set manually in Render dashboard
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: NODE_ENV
+        value: production

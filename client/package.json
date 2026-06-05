@@ -1,8 +1,9 @@
 {
-  "name": "client-v",
+  "name": "anwesh-ai-image-generator-client",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": "Anwesh",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
